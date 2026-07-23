@@ -1,0 +1,51 @@
+# Hexo Theme Fluid 配置
+# 指南: https://hexo.fluid-dev.com/docs/guide/
+
+navbar:
+  blog_title: "Startale的博客"
+
+index:
+  banner_img: /img/default.png
+  slogan:
+    enable: true
+    text: "行到水穷处，坐看云起时"
+
+post:
+  banner_img: /img/default.png
+  banner_img_height: 70
+  math:
+    enable: false
+
+archive:
+  banner_img: /img/default.png
+
+category:
+  banner_img: /img/default.png
+
+tag:
+  banner_img: /img/default.png
+
+about:
+  enable: true
+  banner_img: /img/default.png
+  avatar: /img/avatar.png
+  name: "Startale803"
+  intro: "一个普通的开发者"
+
+page:
+  banner_img: /img/default.png
+
+page404:
+  enable: true
+  banner_img: /img/default.png
+
+dark_mode:
+  enable: true
+  default: auto
+
+footer:
+  content: '
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+  '
