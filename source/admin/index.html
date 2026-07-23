@@ -33,6 +33,7 @@
     .pane:first-child { border-right: 1px solid #ddd; }
     .pane-header { padding: 8px 16px; background: #f8f9fa; border-bottom: 1px solid #ddd; font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: .5px; }
     .pane-content { flex: 1; overflow: auto; }
+    .pane:first-child .pane-content { overflow: hidden; }
     #editor { width: 100%; height: 100%; border: none; outline: none; resize: none; padding: 20px; font-family: "SF Mono", "Fira Code", "Consolas", monospace; font-size: 14px; line-height: 1.7; tab-size: 2; }
     #preview { padding: 20px; background: #fff; }
     #preview .markdown-body { max-width: 800px; color-scheme: light; }
@@ -131,14 +132,17 @@
     });
 
     function renderPreview() {
-      const html = marked.parse(editor.value || '');
-      preview.innerHTML = DOMPurify.sanitize(html);
-      document.querySelectorAll('#preview pre code').forEach((block) => {
-        hljs.highlightElement(block);
-      });
+      try {
+        const html = marked.parse(editor.value || '');
+        preview.innerHTML = DOMPurify.sanitize(html);
+        document.querySelectorAll('#preview pre code').forEach((block) => {
+          try { hljs.highlightElement(block); } catch (e) {}
+        });
+      } catch (e) {}
     }
 
     editor.addEventListener('input', renderPreview);
+    editor.addEventListener('keyup', renderPreview);
 
     // 默认示例内容
     const defaultContent = `---
