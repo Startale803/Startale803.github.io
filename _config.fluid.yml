@@ -3,12 +3,20 @@
 
 navbar:
   blog_title: "Startale的博客"
+  menu:
+    - { key: "home", link: "/", icon: "iconfont icon-home-fill" }
+    - { key: "archive", link: "/archives/", icon: "iconfont icon-archive-fill", name: "文章" }
+    - { key: "category", link: "/categories/", icon: "iconfont icon-category-fill", name: "题们" }
+    - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
+    - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
 
 index:
   banner_img: /img/default.png
   slogan:
     enable: true
     text: "行到水穷处，坐看云起时"
+
+custom_js: /js/custom.js
 
 post:
   banner_img: /img/default.png
@@ -18,6 +26,7 @@ post:
 
 archive:
   banner_img: /img/default.png
+  title: 文章
 
 category:
   banner_img: /img/default.png
