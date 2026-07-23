@@ -105,50 +105,29 @@
     const statusEl = document.getElementById('status');
     const tokenInput = document.getElementById('token');
 
-    // 扩展 marked 支持 LaTeX
-    const renderer = new marked.Renderer();
-    const text = /^(\${1,2})([\s\S]*?)\1/.source;
-    marked.use({
-      renderer,
-      extensions: [{
-        name: 'inlineKatex',
-        level: 'inline',
-        start(src) { return src.indexOf('$'); },
-        tokenizer(src) {
-          const match = src.match(new RegExp('^\\$(\\\\.|[^$])+?\\$'));
-          if (match && !match[0].startsWith('$$')) {
-            return { type: 'inlineKatex', raw: match[0], text: match[0].slice(1, -1) };
-          }
-        },
-        renderer(token) {
-          try { return katex.renderToString(token.text, { throwOnError: false }); }
-          catch(e) { return `<span class="katex-error">${token.raw}</span>`; }
-        }
-      }, {
-        name: 'blockKatex',
-        level: 'block',
-        start(src) { return src.indexOf('$$'); },
-        tokenizer(src) {
-          const match = src.match(/^\$\$([\s\S]*?)\$\$/);
-          if (match) {
-            return { type: 'blockKatex', raw: match[0], text: match[1].trim() };
-          }
-        },
-        renderer(token) {
-          try { return `<div class="katex-block">${katex.renderToString(token.text, { displayMode: true, throwOnError: false })}</div>`; }
-          catch(e) { return `<div class="katex-error">${token.raw}</div>`; }
-        }
-      }]
-    });
+    function renderKatex(html) {
+      // 块级公式 $$...$$
+      html = html.replace(/\$\$([\s\S]*?)\$\$/g, (_, tex) => {
+        try { return katex.renderToString(tex.trim(), { displayMode: true, throwOnError: false }); }
+        catch(e) { return `<div style="color:red">LaTeX error: ${tex.trim()}</div>`; }
+      });
+      // 行内公式 $...$
+      html = html.replace(/\$(.+?)\$/g, (_, tex) => {
+        try { return katex.renderToString(tex.trim(), { throwOnError: false }); }
+        catch(e) { return `<span style="color:red">$${tex}$</span>`; }
+      });
+      return html;
+    }
 
     function renderPreview() {
-      try {
-        const html = marked.parse(editor.value || '');
-        preview.innerHTML = DOMPurify.sanitize(html);
-        document.querySelectorAll('#preview pre code').forEach((block) => {
-          try { hljs.highlightElement(block); } catch (e) {}
-        });
-      } catch (e) {}
+      const raw = editor.value || '';
+      const body = raw.replace(/^---[\s\S]*?---\n*/, '');
+      const html = marked.parse(body);
+      const withKatex = renderKatex(html);
+      preview.innerHTML = DOMPurify.sanitize(withKatex);
+      document.querySelectorAll('#preview pre code').forEach((block) => {
+        try { hljs.highlightElement(block); } catch (_) {}
+      });
     }
 
     editor.addEventListener('input', renderPreview);
@@ -168,45 +147,31 @@ categories:
 
 这是我的第一篇博客文章！
 
-**Markdown** 语法支持：
-- 列表
-- \`代码块\`
-- [链接](https://hexo.io)
+**Markdown** 语法：
+- **粗体** \`代码\` [链接](https://hexo.io)
+- 行内公式: $E = mc^2$
 
-行内公式: $E = mc^2$
+### 代码高亮示例
 
-### 代码分色渲染
-
-```javascript
+\`\`\`javascript
 function greet(name) {
   const msg = \`Hello, \${name}!\`;
   console.log(msg);
   return msg;
 }
 greet('World');
-```
+\`\`\`
 
-```python
+\`\`\`python
 def fibonacci(n):
     a, b = 0, 1
     for _ in range(n):
         yield a
         a, b = b, a + b
-
 print(list(fibonacci(10)))
-```
-
-\`\`\`css
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
 \`\`\`
 
-块级公式:
+### 块级公式
 
 $$
 \\frac{d}{dx}\\left( \\int_{a}^{x} f(t)\\,dt\\right) = f(x)
