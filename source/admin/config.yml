@@ -1,0 +1,29 @@
+backend:
+  name: github
+  repo: Startale803/Startale803.github.io
+  branch: main
+  base_url: https://api.github.com
+
+publish_mode: editorial_workflow
+media_folder: source/img
+public_folder: /img
+site_url: https://startale803.github.io
+display_url: https://startale803.github.io
+logo: /img/fluid.png
+
+collections:
+  - name: "blog"
+    label: "文章"
+    folder: "source/_posts"
+    create: true
+    delete: true
+    path: "{{title}}"
+    slug: "{{slug}}"
+    preview_path: "{{year}}/{{month}}/{{day}}/{{slug}}"
+    sort: "date:desc"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "发布日期", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm:ss" }
+      - { label: "标签", name: "tags", widget: "list", required: false }
+      - { label: "分类", name: "categories", widget: "list", required: false }
+      - { label: "正文", name: "body", widget: "markdown", minimal: false, buttons: ["bold","italic","code","link","heading","unordered-list","ordered-list","quote","image"] }

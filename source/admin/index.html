@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>写文章 - Startale的博客</title>
+  <link rel="stylesheet" href="https://unpkg.com/github-markdown-css@5/github-markdown.css">
+  <link rel="stylesheet" href="https://unpkg.com/katex@0.16/dist/katex.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; color: #333; }
+    .toolbar { background: #fff; border-bottom: 1px solid #ddd; padding: 10px 20px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+    .toolbar h1 { font-size: 18px; font-weight: 600; color: #2f4154; margin-right: auto; }
+    .toolbar a { color: #2f4154; text-decoration: none; font-size: 14px; }
+    .toolbar a:hover { text-decoration: underline; }
+    .toolbar input[type="text"] { padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; width: 300px; }
+    .btn { padding: 8px 20px; border: none; border-radius: 4px; font-size: 14px; cursor: pointer; font-weight: 500; }
+    .btn-primary { background: #2f4154; color: #fff; }
+    .btn-primary:hover { background: #1f3144; }
+    .btn-success { background: #28a745; color: #fff; }
+    .btn-success:hover { background: #22863a; }
+    .btn-secondary { background: #e1e4e8; color: #333; }
+    .btn-secondary:hover { background: #d1d5da; }
+    .token-input { display: flex; gap: 8px; align-items: center; }
+    .token-input input[type="password"] { padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; width: 320px; }
+    .meta-bar { background: #fff; border-bottom: 1px solid #ddd; padding: 10px 20px; display: flex; gap: 16px; align-items: center; }
+    .meta-bar label { font-size: 13px; color: #666; display: flex; align-items: center; gap: 4px; }
+    .meta-bar input { padding: 4px 8px; border: 1px solid #ddd; border-radius: 3px; font-size: 13px; }
+    .meta-bar input[name="tags"] { width: 200px; }
+    .container { display: flex; height: calc(100vh - 105px); }
+    .pane { flex: 1; display: flex; flex-direction: column; }
+    .pane:first-child { border-right: 1px solid #ddd; }
+    .pane-header { padding: 8px 16px; background: #f8f9fa; border-bottom: 1px solid #ddd; font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: .5px; }
+    .pane-content { flex: 1; overflow: auto; }
+    #editor { width: 100%; height: 100%; border: none; outline: none; resize: none; padding: 20px; font-family: "SF Mono", "Fira Code", "Consolas", monospace; font-size: 14px; line-height: 1.7; tab-size: 2; }
+    #preview { padding: 20px; }
+    #preview .markdown-body { max-width: 800px; }
+    .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); padding: 12px 24px; border-radius: 6px; color: #fff; font-size: 14px; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 999; }
+    .toast.show { opacity: 1; }
+    .toast.success { background: #28a745; }
+    .toast.error { background: #d73a49; }
+    .toast.info { background: #0366d6; }
+    #status { font-size: 12px; color: #999; margin-left: 8px; }
+    .loading { display: inline-block; width: 14px; height: 14px; border: 2px solid #ddd; border-top-color: #2f4154; border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <h1>📝 写文章</h1>
+    <input type="text" id="title" placeholder="文章标题" value="">
+    <label style="font-size:13px;color:#666">
+      <input type="checkbox" id="isDraft"> 草稿
+    </label>
+    <button class="btn btn-success" onclick="publish()">发布</button>
+    <a href="https://startale803.github.io" target="_blank" style="margin-left:8px">查看博客 →</a>
+    <span id="status"></span>
+  </div>
+
+  <div class="meta-bar">
+    <label>分类: <input type="text" name="categories" placeholder="如: 技术,生活" title="多个分类用逗号分隔"></label>
+    <label>标签: <input type="text" name="tags" placeholder="如: hexo,javascript" title="多个标签用逗号分隔"></label>
+    <label style="margin-left:auto">
+      🔑
+      <input type="password" id="token" placeholder="GitHub Personal Access Token" style="width:280px" onchange="saveToken()">
+      <button class="btn btn-secondary" style="padding:4px 10px;font-size:12px" onclick="saveToken()">保存</button>
+    </label>
+  </div>
+
+  <div class="container">
+    <div class="pane">
+      <div class="pane-header">Markdown 源码</div>
+      <div class="pane-content">
+        <textarea id="editor" placeholder="在此编写 Markdown 内容，支持 LaTeX 数学公式（$...$ 或 $$...$$）&#10;&#10;---&#10;title: 我的第一篇文章&#10;date: 2026-07-23 15:00:00&#10;tags:&#10;- hello&#10;categories:&#10;- 随笔&#10;---"></textarea>
+      </div>
+    </div>
+    <div class="pane">
+      <div class="pane-header">预览</div>
+      <div class="pane-content" id="preview"><div class="markdown-body"></div></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="https://unpkg.com/marked@12/marked.min.js"></script>
+  <script src="https://unpkg.com/katex@0.16/dist/katex.min.js"></script>
+  <script src="https://unpkg.com/dompurify@3/dist/purify.min.js"></script>
+  <script>
+    const editor = document.getElementById('editor');
+    const preview = document.getElementById('preview').querySelector('.markdown-body');
+    const toast = document.getElementById('toast');
+    const statusEl = document.getElementById('status');
+    const tokenInput = document.getElementById('token');
+
+    // 扩展 marked 支持 LaTeX
+    const renderer = new marked.Renderer();
+    const text = /^(\${1,2})([\s\S]*?)\1/.source;
+    marked.use({
+      renderer,
+      extensions: [{
+        name: 'inlineKatex',
+        level: 'inline',
+        start(src) { return src.indexOf('$'); },
+        tokenizer(src) {
+          const match = src.match(new RegExp('^\\$(\\\\.|[^$])+?\\$'));
+          if (match && !match[0].startsWith('$$')) {
+            return { type: 'inlineKatex', raw: match[0], text: match[0].slice(1, -1) };
+          }
+        },
+        renderer(token) {
+          try { return katex.renderToString(token.text, { throwOnError: false }); }
+          catch(e) { return `<span class="katex-error">${token.raw}</span>`; }
+        }
+      }, {
+        name: 'blockKatex',
+        level: 'block',
+        start(src) { return src.indexOf('$$'); },
+        tokenizer(src) {
+          const match = src.match(/^\$\$([\s\S]*?)\$\$/);
+          if (match) {
+            return { type: 'blockKatex', raw: match[0], text: match[1].trim() };
+          }
+        },
+        renderer(token) {
+          try { return `<div class="katex-block">${katex.renderToString(token.text, { displayMode: true, throwOnError: false })}</div>`; }
+          catch(e) { return `<div class="katex-error">${token.raw}</div>`; }
+        }
+      }]
+    });
+
+    function renderPreview() {
+      const html = marked.parse(editor.value || '');
+      preview.innerHTML = DOMPurify.sanitize(html);
+    }
+
+    editor.addEventListener('input', renderPreview);
+
+    // 默认示例内容
+    const defaultContent = `---
+title: Hello World
+date: ${new Date().toISOString().slice(0,19).replace('T', ' ')}
+tags:
+  - hexo
+categories:
+  - 随笔
+---
+
+## 欢迎
+
+这是我的第一篇博客文章！
+
+**Markdown** 语法支持：
+- 列表
+- \`代码块\`
+- [链接](https://hexo.io)
+
+行内公式: $E = mc^2$
+
+块级公式:
+
+$$
+\\frac{d}{dx}\\left( \\int_{a}^{x} f(t)\\,dt\\right) = f(x)
+$$
+`;
+    editor.value = defaultContent;
+    renderPreview();
+
+    // Token 本地存储
+    const saved = localStorage.getItem('github_token');
+    if (saved) tokenInput.value = saved;
+
+    function saveToken() {
+      const t = tokenInput.value.trim();
+      if (t) localStorage.setItem('github_token', t);
+      showToast('Token 已保存', 'info');
+    }
+
+    function showToast(msg, type, duration) {
+      toast.textContent = msg;
+      toast.className = 'toast ' + type + ' show';
+      setTimeout(() => toast.classList.remove('show'), duration || 3000);
+    }
+
+    function setStatus(html) {
+      statusEl.innerHTML = html;
+    }
+
+    async function publish() {
+      const token = tokenInput.value.trim();
+      if (!token) {
+        showToast('请先在右上角输入 GitHub Personal Access Token', 'error', 4000);
+        return;
+      }
+
+      const title = document.getElementById('title').value.trim();
+      if (!title) { showToast('请输入文章标题', 'error'); return; }
+
+      const isDraft = document.getElementById('isDraft').checked;
+      const cats = document.querySelector('input[name="categories"]').value.trim();
+      const tags = document.querySelector('input[name="tags"]').value.trim();
+
+      // 解析 front-matter
+      let content = editor.value;
+      let fmMatch = content.match(/^---\n([\s\S]*?)\n---\n/);
+      let fmLines = [];
+      if (fmMatch) {
+        content = content.slice(fmMatch[0].length);
+        // 保留已有的 front-matter 行（但不包含 title/date）
+        fmLines = fmMatch[1].split('\n').filter(l => !l.startsWith('title:') && !l.startsWith('date:') && !l.trim().startsWith('tags:') && !l.trim().startsWith('categories:') && l.trim());
+      }
+
+      const now = new Date();
+      const dateStr = now.toISOString().slice(0,19).replace('T', ' ');
+      const slug = title.toLowerCase().replace(/[^\w\u4e00-\u9fa5]+/g, '-').replace(/^-|-$/g, '') || 'post';
+
+      let frontMatter = '---\n';
+      frontMatter += `title: ${title}\n`;
+      frontMatter += `date: ${dateStr}\n`;
+      if (!isDraft && cats) frontMatter += `categories: [${cats.split(/[,，]/).map(c => '"' + c.trim() + '"').join(', ')}]\n`;
+      if (!isDraft && tags) frontMatter += `tags: [${tags.split(/[,，]/).map(t => '"' + t.trim() + '"').join(', ')}]\n`;
+      fmLines.filter(l => l.trim()).forEach(l => frontMatter += l + '\n');
+      frontMatter += '---\n\n';
+
+      if (isDraft) {
+        frontMatter += 'draft: true\n\n';
+      }
+
+      const fullContent = frontMatter + content;
+      const fileName = isDraft ? `_drafts/${slug}.md` : `_posts/${title}.md`;
+
+      setStatus('<span class="loading"></span> 正在发布...');
+
+      try {
+        // 获取最新 commit SHA
+        const repoUrl = 'https://api.github.com/repos/Startale803/Startale803.github.io';
+        const refResp = await fetch(`${repoUrl}/git/ref/heads/main`, {
+          headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github.v3+json' }
+        });
+        if (!refResp.ok) throw new Error(`认证失败 (${refResp.status})，请检查 Token 权限`);
+        const refData = await refResp.json();
+        const latestSha = refData.object.sha;
+
+        // 创建 blob
+        const blobResp = await fetch(`${repoUrl}/git/blobs`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content: fullContent, encoding: 'utf-8' })
+        });
+        if (!blobResp.ok) throw new Error('创建文件失败');
+        const blobData = await blobResp.json();
+
+        // 获取 tree
+        const treeResp = await fetch(`${repoUrl}/git/trees/${latestSha}`, {
+          headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github.v3+json' }
+        });
+        const treeData = await treeResp.json();
+
+        // 创建新 tree
+        const newTreeResp = await fetch(`${repoUrl}/git/trees`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            base_tree: treeData.sha,
+            tree: [{ path: `source/${fileName}`, mode: '100644', type: 'blob', sha: blobData.sha }]
+          })
+        });
+        if (!newTreeResp.ok) throw new Error('创建 tree 失败');
+        const newTreeData = await newTreeResp.json();
+
+        // 创建 commit
+        const commitResp = await fetch(`${repoUrl}/git/commits`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: `发布文章: ${title}`,
+            tree: newTreeData.sha,
+            parents: [latestSha]
+          })
+        });
+        if (!commitResp.ok) throw new Error('创建 commit 失败');
+        const commitData = await commitResp.json();
+
+        // 更新 ref
+        const updateResp = await fetch(`${repoUrl}/git/refs/heads/main`, {
+          method: 'PATCH',
+          headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sha: commitData.sha, force: false })
+        });
+        if (!updateResp.ok) throw new Error('推送失败');
+
+        setStatus('');
+        showToast(`✅ 文章「${title}」已发布！GitHub Actions 正在自动部署...`, 'success', 5000);
+        editor.value = '';
+        renderPreview();
+        document.getElementById('title').value = '';
+
+      } catch (err) {
+        setStatus('');
+        showToast('❌ ' + err.message, 'error', 5000);
+      }
+    }
+  </script>
+</body>
+</html>
