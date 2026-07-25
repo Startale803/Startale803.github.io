@@ -6,7 +6,7 @@ navbar:
   menu:
     - { key: "home", link: "/", icon: "iconfont icon-home-fill" }
     - { key: "archive", link: "/archives/", icon: "iconfont icon-archive-fill", name: "文章" }
-    - { key: "problems", link: "/problems/", icon: "iconfont icon-book-fill", name: "题们" }
+    - { key: "problems", link: "/problems/", icon: "iconfont icon-books", name: "题们" }
     - { key: "category", link: "/categories/", icon: "iconfont icon-category-fill", name: "分类" }
     - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
     - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
@@ -17,7 +17,7 @@ banner:
   width_height_ratio: 0
 
 index:
-  banner_img: /img/random/1905dee72efeb306cba498f3602c3d9329708bbf.jpg
+  banner_img:
   slogan:
     enable: true
     text: "行到水穷处，坐看云起时"
@@ -26,35 +26,35 @@ custom_js: /js/custom.js
 custom_css: /css/custom.css
 
 post:
-  banner_img: /img/random/1905dee72efeb306cba498f3602c3d9329708bbf.jpg
+  banner_img:
   banner_img_height: 70
   math:
     enable: false
 
 archive:
-  banner_img: /img/random/1905dee72efeb306cba498f3602c3d9329708bbf.jpg
+  banner_img:
   title: 文章
 
 category:
-  banner_img: /img/random/1905dee72efeb306cba498f3602c3d9329708bbf.jpg
+  banner_img:
   title: 分类
 
 tag:
-  banner_img: /img/random/1905dee72efeb306cba498f3602c3d9329708bbf.jpg
+  banner_img:
 
 about:
   enable: true
-  banner_img: /img/random/1905dee72efeb306cba498f3602c3d9329708bbf.jpg
+  banner_img:
   avatar: /img/avatar.png
   name: "Startale803"
   intro: "一个普通的开发者"
 
 page:
-  banner_img: /img/random/1905dee72efeb306cba498f3602c3d9329708bbf.jpg
+  banner_img:
 
 page404:
   enable: true
-  banner_img: /img/random/1905dee72efeb306cba498f3602c3d9329708bbf.jpg
+  banner_img:
 
 dark_mode:
   enable: true
