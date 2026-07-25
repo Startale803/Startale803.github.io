@@ -1,0 +1,241 @@
+{
+  "categories": [
+    {
+      "id": "basics",
+      "name": "基础与技巧",
+      "algorithms": [
+        { "id": "simulation", "name": "模拟" },
+        { "id": "enumeration", "name": "枚举" },
+        { "id": "implementation", "name": "实现" },
+        { "id": "sort", "name": "排序" },
+        { "id": "prefix-sum", "name": "前缀和 / 差分" },
+        { "id": "two-pointers", "name": "双指针" },
+        { "id": "binary-search", "name": "二分" },
+        { "id": "ternary-search", "name": "三分" },
+        { "id": "divide-conquer", "name": "分治" },
+        { "id": "greedy", "name": "贪心" },
+        { "id": "constructive", "name": "构造" },
+        { "id": "randomized", "name": "随机化" },
+        { "id": "meet-in-middle", "name": "折半搜索" },
+        { "id": "offline", "name": "离线处理" }
+      ]
+    },
+    {
+      "id": "data-structures",
+      "name": "数据结构",
+      "algorithms": [
+        { "id": "stack-queue", "name": "栈 / 队列" },
+        { "id": "monotonic", "name": "单调栈 / 单调队列" },
+        { "id": "heap", "name": "堆 / 优先队列" },
+        { "id": "dsu", "name": "并查集" },
+        { "id": "fenwick", "name": "树状数组" },
+        { "id": "segment-tree", "name": "线段树" },
+        { "id": "sparse-table", "name": "ST 表" },
+        { "id": "sqrt-decomposition", "name": "分块" },
+        { "id": "balanced-tree", "name": "平衡树 / Treap" },
+        { "id": "persistent-ds", "name": "可持久化数据结构" },
+        { "id": "merge-sort-tree", "name": "归并树" },
+        { "id": "wavelet-matrix", "name": "划分树 / Wavelet Matrix" },
+        { "id": "link-cut-tree", "name": "动态树 / LCT" },
+        { "id": "kd-tree", "name": "KD 树" }
+      ]
+    },
+    {
+      "id": "graph",
+      "name": "图论",
+      "algorithms": [
+        { "id": "graph-traversal", "name": "DFS / BFS" },
+        { "id": "shortest-path", "name": "最短路" },
+        { "id": "mst", "name": "最小生成树" },
+        { "id": "toposort", "name": "拓扑排序" },
+        { "id": "scc", "name": "强连通分量" },
+        { "id": "bcc", "name": "双连通分量" },
+        { "id": "euler-path", "name": "欧拉路" },
+        { "id": "lca", "name": "LCA / 倍增" },
+        { "id": "tree-diameter", "name": "树的直径 / 重心" },
+        { "id": "tree-dsu", "name": "树上启发式合并" },
+        { "id": "hld", "name": "树链剖分" },
+        { "id": "virtual-tree", "name": "虚树" },
+        { "id": "centroid-decomposition", "name": "点分治 / 点分树" },
+        { "id": "flow", "name": "网络流" },
+        { "id": "min-cost-flow", "name": "最小费用流" },
+        { "id": "matching", "name": "二分图匹配" },
+        { "id": "general-matching", "name": "一般图匹配" },
+        { "id": "dominator-tree", "name": "支配树" }
+      ]
+    },
+    {
+      "id": "dynamic-programming",
+      "name": "动态规划",
+      "algorithms": [
+        { "id": "linear-dp", "name": "线性 DP" },
+        { "id": "knapsack", "name": "背包 DP" },
+        { "id": "interval-dp", "name": "区间 DP" },
+        { "id": "tree-dp", "name": "树形 DP" },
+        { "id": "digit-dp", "name": "数位 DP" },
+        { "id": "state-compression-dp", "name": "状压 DP" },
+        { "id": "probability-dp", "name": "概率 / 期望 DP" },
+        { "id": "profile-dp", "name": "轮廓线 DP" },
+        { "id": "rerooting-dp", "name": "换根 DP" },
+        { "id": "dp-optimization", "name": "单调队列 / 斜率优化" },
+        { "id": "divide-conquer-dp", "name": "分治优化 DP" },
+        { "id": "quadrangle-optimization", "name": "四边形不等式优化" },
+        { "id": "alien-trick", "name": "WQS 二分" }
+      ]
+    },
+    {
+      "id": "strings",
+      "name": "字符串",
+      "algorithms": [
+        { "id": "string", "name": "字符串基础" },
+        { "id": "hash", "name": "字符串哈希" },
+        { "id": "kmp", "name": "KMP / Z 函数" },
+        { "id": "trie", "name": "Trie" },
+        { "id": "aho-corasick", "name": "AC 自动机" },
+        { "id": "manacher", "name": "Manacher" },
+        { "id": "suffix-array", "name": "后缀数组" },
+        { "id": "suffix-automaton", "name": "后缀自动机" },
+        { "id": "palindrome-automaton", "name": "回文自动机" },
+        { "id": "minimal-representation", "name": "最小表示法" },
+        { "id": "lyndon", "name": "Lyndon 分解" }
+      ]
+    },
+    {
+      "id": "mathematics",
+      "name": "数学",
+      "algorithms": [
+        { "id": "math", "name": "数学 / 公式推导" },
+        { "id": "number-theory", "name": "数论" },
+        { "id": "gcd", "name": "GCD / 扩展欧几里得" },
+        { "id": "sieve", "name": "筛法 / 素数" },
+        { "id": "modular", "name": "模运算 / 逆元" },
+        { "id": "crt", "name": "中国剩余定理" },
+        { "id": "discrete-log", "name": "BSGS / 离散对数" },
+        { "id": "combinatorics", "name": "组合数学" },
+        { "id": "inclusion-exclusion", "name": "容斥原理" },
+        { "id": "mobius", "name": "莫比乌斯反演" },
+        { "id": "polynomial", "name": "多项式 / FFT / NTT" },
+        { "id": "linear-algebra", "name": "线性代数 / 高斯消元" },
+        { "id": "matrix", "name": "矩阵快速幂" },
+        { "id": "linear-recurrence", "name": "线性递推 / BM" },
+        { "id": "floor-sum", "name": "类欧几里得" },
+        { "id": "pell", "name": "Pell 方程" }
+      ]
+    },
+    {
+      "id": "computational-geometry",
+      "name": "计算几何",
+      "algorithms": [
+        { "id": "geometry", "name": "点线面基础" },
+        { "id": "convex-hull", "name": "凸包" },
+        { "id": "rotating-calipers", "name": "旋转卡壳" },
+        { "id": "half-plane", "name": "半平面交" },
+        { "id": "closest-pair", "name": "平面最近点对" },
+        { "id": "sweep-line", "name": "扫描线" },
+        { "id": "point-location", "name": "点定位" },
+        { "id": "voronoi", "name": "Voronoi / Delaunay" },
+        { "id": "geometry-3d", "name": "三维计算几何" }
+      ]
+    },
+    {
+      "id": "search",
+      "name": "搜索与剪枝",
+      "algorithms": [
+        { "id": "dfs", "name": "深度优先搜索" },
+        { "id": "bfs", "name": "广度优先搜索" },
+        { "id": "bidirectional-search", "name": "双向搜索" },
+        { "id": "iterative-deepening", "name": "迭代加深" },
+        { "id": "a-star", "name": "A* / IDA*" },
+        { "id": "dancing-links", "name": "Dancing Links" },
+        { "id": "branch-bound", "name": "分支限界 / 剪枝" }
+      ]
+    },
+    {
+      "id": "advanced-techniques",
+      "name": "高级技巧",
+      "algorithms": [
+        { "id": "bitset", "name": "Bitset 优化" },
+        { "id": "small-large", "name": "启发式合并" },
+        { "id": "mo-algorithm", "name": "莫队" },
+        { "id": "cdq", "name": "CDQ 分治" },
+        { "id": "parallel-binary-search", "name": "整体二分" },
+        { "id": "rollback", "name": "撤销 / 回滚" },
+        { "id": "online-offline", "name": "在线转离线" },
+        { "id": "amortized", "name": "摊还分析" },
+        { "id": "sqrt-technique", "name": "根号分治" }
+      ]
+    },
+    {
+      "id": "game-probability",
+      "name": "博弈与概率",
+      "algorithms": [
+        { "id": "game-theory", "name": "博弈论" },
+        { "id": "nim", "name": "Nim / SG 函数" },
+        { "id": "minimax", "name": "极小化极大" },
+        { "id": "probability", "name": "概率论" },
+        { "id": "expectation", "name": "期望" },
+        { "id": "markov", "name": "马尔可夫链" }
+      ]
+    },
+    {
+      "id": "specialized",
+      "name": "专项模型",
+      "algorithms": [
+        { "id": "interval", "name": "区间问题" },
+        { "id": "permutation", "name": "排列问题" },
+        { "id": "grid", "name": "网格问题" },
+        { "id": "tree", "name": "树上问题" },
+        { "id": "dag", "name": "DAG" },
+        { "id": "functional-graph", "name": "基环树 / 函数图" },
+        { "id": "matroid", "name": "拟阵" },
+        { "id": "2-sat", "name": "2-SAT" },
+        { "id": "difference-constraints", "name": "差分约束" },
+        { "id": "exact-cover", "name": "精确覆盖" }
+      ]
+    }
+  ],
+  "problems": [
+    {
+      "id": "CF1A",
+      "name": "Theatre Square",
+      "url": "https://codeforces.com/problemset/problem/1/A",
+      "algorithms": ["math", "implementation"]
+    },
+    {
+      "id": "CF1B",
+      "name": "Spreadsheets",
+      "url": "https://codeforces.com/problemset/problem/1/B",
+      "algorithms": ["implementation", "string"]
+    },
+    {
+      "id": "CF1566B",
+      "name": "MIN-MEX Cut",
+      "url": "https://codeforces.com/problemset/problem/1566/B",
+      "algorithms": ["greedy", "string"]
+    },
+    {
+      "id": "abc_112_a",
+      "name": "Programming Education",
+      "url": "https://atcoder.jp/contests/abc112/tasks/abc112_a",
+      "algorithms": ["implementation"]
+    },
+    {
+      "id": "arc_102_b",
+      "name": "All Your Paths are Different Lengths!",
+      "url": "https://atcoder.jp/contests/arc102/tasks/arc102_b",
+      "algorithms": ["constructive", "graph-traversal"]
+    },
+    {
+      "id": "P3372",
+      "name": "【模板】线段树 1",
+      "url": "https://www.luogu.com.cn/problem/P3372",
+      "algorithms": ["segment-tree"]
+    },
+    {
+      "id": "P4779",
+      "name": "【模板】单源最短路径（标准版）",
+      "url": "https://www.luogu.com.cn/problem/P4779",
+      "algorithms": ["shortest-path", "heap"]
+    }
+  ]
+}
