@@ -29,7 +29,9 @@ post:
   banner_img:
   banner_img_height: 70
   math:
-    enable: false
+    enable: true
+    specific: false
+    engine: mathjax
 
 archive:
   banner_img:
