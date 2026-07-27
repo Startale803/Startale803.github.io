@@ -134,6 +134,32 @@
       return tag;
     }
 
+    function ratingOf(problem) {
+      if (typeof problem.rating === 'number' && problem.rating >= 0 && problem.rating <= 6) {
+        return Math.round(problem.rating * 2) / 2;
+      }
+      var hash = 0;
+      for (var index = 0; index < problem.id.length; index += 1) {
+        hash = ((hash * 31) + problem.id.charCodeAt(index)) >>> 0;
+      }
+      return ((hash % 12) + 1) / 2;
+    }
+
+    function makeRating(rating) {
+      var element = document.createElement('span');
+      element.className = 'problem-rating';
+      element.setAttribute('aria-label', '靓仔度 ' + rating + ' / 6 星');
+      element.title = '靓仔度 ' + rating + ' / 6 星';
+      for (var star = 1; star <= 6; star += 1) {
+        var fill = Math.max(0, Math.min(1, rating - star + 1));
+        var item = document.createElement('span');
+        item.className = 'problem-star' + (fill === 1 ? ' is-full' : fill === 0.5 ? ' is-half' : '');
+        item.textContent = '★';
+        element.appendChild(item);
+      }
+      return element;
+    }
+
     function renderSelected() {
       selectedBar.innerHTML = '';
       selected.forEach(function (id) {
@@ -171,6 +197,7 @@
         var tags = document.createElement('div');
         tags.className = 'problem-tags';
         problem.algorithms.forEach(function (id) { tags.appendChild(makeTag(id, false)); });
+        tags.appendChild(makeRating(ratingOf(problem)));
         row.appendChild(identity);
         row.appendChild(tags);
         list.appendChild(row);

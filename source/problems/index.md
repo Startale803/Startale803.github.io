@@ -16,6 +16,10 @@ comments: false
       <span>算法筛选</span>
       <span class="filter-count" aria-hidden="true"></span>
     </button>
+    <a class="problem-manage-button" href="/addproblem/">
+      <i class="iconfont icon-edit" aria-hidden="true"></i>
+      <span>添加 / 管理题目</span>
+    </a>
   </div>
   <div id="problem-selected-tags" class="problem-selected-tags" hidden></div>
   <div class="problem-list-heading">

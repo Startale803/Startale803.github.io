@@ -199,43 +199,50 @@
       "id": "CF1A",
       "name": "Theatre Square",
       "url": "https://codeforces.com/problemset/problem/1/A",
-      "algorithms": ["math", "implementation"]
+      "algorithms": ["math", "implementation"],
+      "rating": 4.5
     },
     {
       "id": "CF1B",
       "name": "Spreadsheets",
       "url": "https://codeforces.com/problemset/problem/1/B",
-      "algorithms": ["implementation", "string"]
+      "algorithms": ["implementation", "string"],
+      "rating": 3
     },
     {
       "id": "CF1566B",
       "name": "MIN-MEX Cut",
       "url": "https://codeforces.com/problemset/problem/1566/B",
-      "algorithms": ["greedy", "string"]
+      "algorithms": ["greedy", "string"],
+      "rating": 5.5
     },
     {
       "id": "abc_112_a",
       "name": "Programming Education",
       "url": "https://atcoder.jp/contests/abc112/tasks/abc112_a",
-      "algorithms": ["implementation"]
+      "algorithms": ["implementation"],
+      "rating": 2.5
     },
     {
       "id": "arc_102_b",
       "name": "All Your Paths are Different Lengths!",
       "url": "https://atcoder.jp/contests/arc102/tasks/arc102_b",
-      "algorithms": ["constructive", "graph-traversal"]
+      "algorithms": ["constructive", "graph-traversal"],
+      "rating": 4
     },
     {
       "id": "P3372",
       "name": "【模板】线段树 1",
       "url": "https://www.luogu.com.cn/problem/P3372",
-      "algorithms": ["segment-tree"]
+      "algorithms": ["segment-tree"],
+      "rating": 3.5
     },
     {
       "id": "P4779",
       "name": "【模板】单源最短路径（标准版）",
       "url": "https://www.luogu.com.cn/problem/P4779",
-      "algorithms": ["shortest-path", "heap"]
+      "algorithms": ["shortest-path", "heap"],
+      "rating": 5
     }
   ]
 }

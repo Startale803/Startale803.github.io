@@ -281,6 +281,26 @@
   justify-content: flex-end;
 }
 
+.problem-manage-button {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 14px;
+  border: 1px solid var(--line-color);
+  border-radius: 4px;
+  color: var(--text-color);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.problem-manage-button:hover { border-color: var(--problem-accent); color: var(--problem-accent); }
+.problem-rating { display: inline-flex; gap: 1px; margin-left: 4px; color: #c5cbd3; font-size: 15px; line-height: 1; letter-spacing: -1px; }
+.problem-star { position: relative; display: inline-block; }
+.problem-star.is-full { color: #f5ae26; }
+.problem-star.is-half::after { position: absolute; inset: 0 auto 0 0; width: 50%; overflow: hidden; color: #f5ae26; content: '★'; }
+
 .problem-empty {
   padding: 56px 16px;
   color: var(--sec-text-color);
