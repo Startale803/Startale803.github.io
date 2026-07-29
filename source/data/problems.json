@@ -652,6 +652,16 @@
         "constructive"
       ],
       "rating": 5
+    },
+    {
+      "id": "CF2241E",
+      "name": "Fair and Square",
+      "url": "https://codeforces.com/problemset/problem/2241/E",
+      "algorithms": [
+        "tree-dp",
+        "combinatorics"
+      ],
+      "rating": 5.5
     }
   ]
 }
