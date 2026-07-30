@@ -101,6 +101,7 @@
     var modal = document.getElementById('problem-filter-modal');
     var categoryList = modal.querySelector('#algorithm-categories');
     var algorithmList = modal.querySelector('#algorithm-options');
+    var algorithmSearch = modal.querySelector('#algorithm-search');
     var draftBar = modal.querySelector('#filter-selected-tags');
     var applyButton = modal.querySelector('#apply-problem-filter');
     var clearButton = modal.querySelector('#clear-problem-filter');
@@ -160,6 +161,24 @@
       return element;
     }
 
+    function makeCommentTip(comment) {
+      var tip = document.createElement('span');
+      tip.className = 'problem-comment-tip';
+      tip.tabIndex = 0;
+      tip.setAttribute('role', 'note');
+      tip.setAttribute('aria-label', '我的评价：' + comment);
+      var icon = document.createElement('span');
+      icon.className = 'problem-comment-icon';
+      icon.setAttribute('aria-hidden', 'true');
+      icon.textContent = 'i';
+      var content = document.createElement('span');
+      content.className = 'problem-comment-content';
+      content.textContent = comment;
+      tip.appendChild(icon);
+      tip.appendChild(content);
+      return tip;
+    }
+
     function renderSelected() {
       selectedBar.innerHTML = '';
       selected.forEach(function (id) {
@@ -198,6 +217,9 @@
         tags.className = 'problem-tags';
         problem.algorithms.forEach(function (id) { tags.appendChild(makeTag(id, false)); });
         tags.appendChild(makeRating(ratingOf(problem)));
+        if (typeof problem.comment === 'string' && problem.comment.trim()) {
+          tags.appendChild(makeCommentTip(problem.comment.trim()));
+        }
         row.appendChild(identity);
         row.appendChild(tags);
         list.appendChild(row);
@@ -220,10 +242,36 @@
       placeholder.hidden = draft.size > 0;
     }
 
+    function matchesAlgorithm(algorithm, query) {
+      var source = (algorithm.id + ' ' + algorithm.name).toLocaleLowerCase();
+      var normalized = source.replace(/[\s\-_*/]+/g, '');
+      var keyword = query.toLocaleLowerCase().replace(/[\s\-_*/]+/g, '');
+      if (!keyword || source.includes(query.toLocaleLowerCase()) || normalized.includes(keyword)) return true;
+      var position = 0;
+      for (var index = 0; index < keyword.length; index += 1) {
+        position = normalized.indexOf(keyword[index], position);
+        if (position < 0) return false;
+        position += 1;
+      }
+      return true;
+    }
+
     function renderAlgorithms() {
       var category = data.categories.find(function (item) { return item.id === activeCategory; });
+      var query = algorithmSearch.value.trim();
+      var algorithms = query ? data.categories.flatMap(function (item) {
+        return item.algorithms.map(function (algorithm) {
+          return { algorithm: algorithm, category: item.name };
+        });
+      }).filter(function (item) { return matchesAlgorithm(item.algorithm, query); }) :
+        category.algorithms.map(function (algorithm) { return { algorithm: algorithm, category: '' }; });
       algorithmList.innerHTML = '';
-      category.algorithms.forEach(function (algorithm) {
+      if (!algorithms.length) {
+        algorithmList.innerHTML = '<div class="algorithm-search-empty">没有匹配的算法</div>';
+        return;
+      }
+      algorithms.forEach(function (item) {
+        var algorithm = item.algorithm;
         var label = document.createElement('label');
         label.className = 'algorithm-option';
         var checkbox = document.createElement('input');
@@ -235,7 +283,7 @@
           renderDraft();
         });
         var text = document.createElement('span');
-        text.textContent = algorithm.name;
+        text.textContent = algorithm.name + (item.category ? ' · ' + item.category : '');
         label.appendChild(checkbox);
         label.appendChild(text);
         algorithmList.appendChild(label);
@@ -261,6 +309,7 @@
 
     function openModal() {
       draft = new Set(selected);
+      algorithmSearch.value = '';
       modal.hidden = false;
       document.body.classList.add('problem-modal-open');
       renderDraft();
@@ -276,6 +325,7 @@
     }
 
     searchInput.addEventListener('input', renderProblems);
+    algorithmSearch.addEventListener('input', renderAlgorithms);
     filterButton.addEventListener('click', openModal);
     closeButtons.forEach(function (button) { button.addEventListener('click', closeModal); });
     clearButton.addEventListener('click', function () {

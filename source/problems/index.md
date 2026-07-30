@@ -37,6 +37,9 @@ comments: false
       <h2 id="problem-filter-title">算法筛选</h2>
       <button class="problem-filter-close" type="button" data-close-filter aria-label="关闭" title="关闭">×</button>
     </header>
+    <div class="algorithm-search-box">
+      <input id="algorithm-search" type="search" autocomplete="off" placeholder="搜索算法，例如 构造 或 FT" aria-label="搜索算法">
+    </div>
     <div class="filter-selected-section">
       <div class="filter-selected-label">已选算法</div>
       <span class="filter-selected-placeholder">尚未选择</span>
