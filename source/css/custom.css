@@ -4,6 +4,41 @@
   --problem-warm: #d96c3f;
 }
 
+/* Keep the banner pleasant while a photo is being decoded, then add a quiet interactive layer. */
+#banner {
+  --banner-pointer-x: 50%;
+  --banner-pointer-y: 50%;
+  background-color: #162b38 !important;
+}
+
+#banner::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: radial-gradient(circle at var(--banner-pointer-x) var(--banner-pointer-y), rgba(177, 231, 255, 0.15), transparent 34%), linear-gradient(120deg, rgba(9, 27, 40, 0.18), rgba(24, 75, 95, 0.08));
+  content: '';
+  pointer-events: none;
+}
+
+.banner-particles {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#banner .banner-text,
+#banner .scroll-down-bar {
+  position: relative;
+  z-index: 3;
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .banner-particles { display: none; }
+}
+
 /* Archive cards */
 .archive-add-button {
   display: inline-flex;

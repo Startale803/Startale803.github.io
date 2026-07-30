@@ -25,6 +25,10 @@ index:
 custom_js: /js/custom.js
 custom_css: /css/custom.css
 
+# MathJax is the only client-side pass: Markdown is rendered during Hexo builds.
+static_prefix:
+  mathjax: https://cdn.jsdelivr.net/npm/mathjax@3/es5/
+
 post:
   banner_img:
   banner_img_height: 70

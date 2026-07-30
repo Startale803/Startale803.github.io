@@ -13,6 +13,30 @@
   function initRandomBanner() {
     var banner = document.getElementById('banner');
     if (!banner) return;
+
+    var storageKey = 'startale-banner-image';
+    var remembered = '';
+    try {
+      remembered = window.localStorage.getItem(storageKey) || '';
+    } catch (error) {
+      // Storage can be unavailable in private browsing; the static fallback still works.
+    }
+
+    function applyWhenReady(imageUrl, remember) {
+      if (!imageUrl) return;
+      var image = new Image();
+      image.onload = function () {
+        banner.style.backgroundImage = 'url("' + imageUrl + '")';
+        banner.style.backgroundPosition = 'center center';
+        banner.style.backgroundSize = 'cover';
+        if (remember) {
+          try { window.localStorage.setItem(storageKey, imageUrl); } catch (error) { /* Ignore unavailable storage. */ }
+        }
+      };
+      image.src = imageUrl;
+    }
+
+    applyWhenReady(remembered, false);
     fetch('/backgrounds.json')
       .then(function (response) {
         if (!response.ok) throw new Error('背景图片清单加载失败');
@@ -20,14 +44,69 @@
       })
       .then(function (backgrounds) {
         if (!backgrounds.length) return;
-        var selected = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-        banner.style.backgroundImage = 'url("' + selected + '")';
-        banner.style.backgroundPosition = 'center center';
-        banner.style.backgroundSize = 'cover';
+        var selected = remembered && backgrounds.indexOf(remembered) !== -1 ? remembered : backgrounds[Math.floor(Math.random() * backgrounds.length)];
+        applyWhenReady(selected, true);
       })
       .catch(function (error) {
         console.error(error);
       });
+  }
+
+  function initBannerEffects() {
+    var banner = document.getElementById('banner');
+    if (!banner || !window.matchMedia || window.matchMedia('(prefers-reduced-motion: reduce), (pointer: coarse)').matches) return;
+
+    var canvas = document.createElement('canvas');
+    canvas.className = 'banner-particles';
+    canvas.setAttribute('aria-hidden', 'true');
+    banner.appendChild(canvas);
+    var context = canvas.getContext('2d');
+    var particles = [];
+    var pointer = { x: 0, y: 0 };
+    var frame;
+
+    function resize() {
+      var bounds = banner.getBoundingClientRect();
+      var scale = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.round(bounds.width * scale));
+      canvas.height = Math.max(1, Math.round(bounds.height * scale));
+      context.setTransform(scale, 0, 0, scale, 0, 0);
+      particles = Array.from({ length: Math.min(42, Math.max(20, Math.round(bounds.width / 38))) }, function () {
+        return { x: Math.random() * bounds.width, y: Math.random() * bounds.height, radius: 0.7 + Math.random() * 1.7, speed: 0.08 + Math.random() * 0.22, phase: Math.random() * Math.PI * 2 };
+      });
+    }
+
+    function draw(time) {
+      var bounds = banner.getBoundingClientRect();
+      context.clearRect(0, 0, bounds.width, bounds.height);
+      particles.forEach(function (particle) {
+        particle.y -= particle.speed;
+        if (particle.y < -4) particle.y = bounds.height + 4;
+        var drift = Math.sin(time / 1800 + particle.phase) * 8;
+        var distance = Math.hypot(particle.x - pointer.x, particle.y - pointer.y);
+        var alpha = distance < 105 ? 0.32 : 0.16;
+        context.beginPath();
+        context.fillStyle = 'rgba(219, 243, 255, ' + alpha + ')';
+        context.arc(particle.x + drift, particle.y, particle.radius, 0, Math.PI * 2);
+        context.fill();
+      });
+      frame = window.requestAnimationFrame(draw);
+    }
+
+    banner.addEventListener('pointermove', function (event) {
+      var bounds = banner.getBoundingClientRect();
+      pointer.x = event.clientX - bounds.left;
+      pointer.y = event.clientY - bounds.top;
+      banner.style.setProperty('--banner-pointer-x', pointer.x + 'px');
+      banner.style.setProperty('--banner-pointer-y', pointer.y + 'px');
+    });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) window.cancelAnimationFrame(frame);
+      else frame = window.requestAnimationFrame(draw);
+    });
+    window.addEventListener('resize', resize, { passive: true });
+    resize();
+    frame = window.requestAnimationFrame(draw);
   }
 
   function initArchive() {
@@ -362,6 +441,7 @@
   }
 
   initRandomBanner();
+  initBannerEffects();
   initArchive();
   initProblems();
 })();
