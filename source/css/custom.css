@@ -11,12 +11,11 @@
   background-color: #162b38 !important;
 }
 
-#banner::before {
+.banner-effects {
   position: absolute;
   z-index: 1;
   inset: 0;
   background: radial-gradient(circle at var(--banner-pointer-x) var(--banner-pointer-y), rgba(177, 231, 255, 0.15), transparent 34%), linear-gradient(120deg, rgba(9, 27, 40, 0.18), rgba(24, 75, 95, 0.08));
-  content: '';
   pointer-events: none;
 }
 
@@ -29,14 +28,18 @@
   pointer-events: none;
 }
 
+#banner .mask {
+  overflow: hidden;
+}
+
 #banner .banner-text,
 #banner .scroll-down-bar {
   position: relative;
-  z-index: 3;
+  z-index: 2;
 }
 
 @media (prefers-reduced-motion: reduce), (pointer: coarse) {
-  .banner-particles { display: none; }
+  .banner-effects, .banner-particles { display: none; }
 }
 
 /* Archive cards */

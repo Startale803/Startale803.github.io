@@ -56,10 +56,17 @@
     var banner = document.getElementById('banner');
     if (!banner || !window.matchMedia || window.matchMedia('(prefers-reduced-motion: reduce), (pointer: coarse)').matches) return;
 
+    var mask = banner.querySelector('.mask');
+    if (!mask) return;
+    var effects = document.createElement('div');
+    effects.className = 'banner-effects';
+    effects.setAttribute('aria-hidden', 'true');
+    mask.insertBefore(effects, mask.firstChild);
+
     var canvas = document.createElement('canvas');
     canvas.className = 'banner-particles';
     canvas.setAttribute('aria-hidden', 'true');
-    banner.appendChild(canvas);
+    effects.appendChild(canvas);
     var context = canvas.getContext('2d');
     var particles = [];
     var pointer = { x: 0, y: 0 };
