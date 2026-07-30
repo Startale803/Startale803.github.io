@@ -662,6 +662,17 @@
         "combinatorics"
       ],
       "rating": 5.5
+    },
+    {
+      "id": "CF1974G",
+      "name": "Money Buys Less Happiness Now",
+      "url": "https://codeforces.com/problemset/problem/1974/G",
+      "algorithms": [
+        "greedy",
+        "sort"
+      ],
+      "rating": 4.5,
+      "comment": "暴力出奇迹，线段树+树状数组氵过。一看题解菜爆了💥💥💥"
     }
   ]
 }
