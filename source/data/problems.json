@@ -673,6 +673,17 @@
       ],
       "rating": 4.5,
       "comment": "暴力出奇迹，线段树+树状数组氵过。一看题解菜爆了💥💥💥"
+    },
+    {
+      "id": "CF1981D",
+      "name": "Turtle and Multiplication",
+      "url": "https://codeforces.com/problemset/problem/1981/D",
+      "algorithms": [
+        "euler-path",
+        "constructive"
+      ],
+      "rating": 5.5,
+      "comment": "我去，欧拉回路\n之前不会的回路和通路，直接补回来了。\n题是好题，思维中，主要是算法不会（）"
     }
   ]
 }
