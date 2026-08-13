@@ -622,7 +622,8 @@
       "algorithms": [
         "segment-tree"
       ],
-      "rating": 3.5
+      "rating": 3.5,
+      "comment": "梦开始的地方（）"
     },
     {
       "id": "P4779",
