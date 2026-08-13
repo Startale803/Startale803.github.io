@@ -577,16 +577,6 @@
   ],
   "problems": [
     {
-      "id": "CF1A",
-      "name": "Theatre Square",
-      "url": "https://codeforces.com/problemset/problem/1/A",
-      "algorithms": [
-        "math",
-        "implementation"
-      ],
-      "rating": 4.5
-    },
-    {
       "id": "CF1B",
       "name": "Spreadsheets",
       "url": "https://codeforces.com/problemset/problem/1/B",
