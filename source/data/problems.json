@@ -684,6 +684,16 @@
       ],
       "rating": 5.5,
       "comment": "我去，欧拉回路\n之前不会的回路和通路，直接补回来了。\n题是好题，思维中，主要是算法不会（）"
+    },
+    {
+      "id": "CF896C",
+      "name": "Willem, Chtholly and Seniorious",
+      "url": "https://codeforces.com/problemset/problem/896/C",
+      "algorithms": [
+        "interval"
+      ],
+      "rating": 6,
+      "comment": "Chtholly is HERE!"
     }
   ]
 }
