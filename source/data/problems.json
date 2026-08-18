@@ -685,6 +685,17 @@
       ],
       "rating": 6,
       "comment": "Chtholly is HERE!"
+    },
+    {
+      "id": "CF2061C",
+      "name": "Kevin and Puzzle",
+      "url": "https://codeforces.com/problemset/problem/2061/C",
+      "algorithms": [
+        "linear-dp",
+        "combinatorics"
+      ],
+      "rating": 4,
+      "comment": "哎，dp\n还是要看题目约定，由说谎者不相邻推出说真话的人间隔不超过1，即从i-1或i-2转移"
     }
   ]
 }
